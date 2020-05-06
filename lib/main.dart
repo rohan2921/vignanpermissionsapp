@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget {
         
         primarySwatch: Colors.blue,
       ),
-      home: Scaffold(body: Center(child:Text('Start here bro'))),//start your widgets from here
+      home: Scaffold(body: Center(child:Text('Push test'))),//start your widgets from here
     );
   }
 }

@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "79050885102",
+    "firebase_url": "https://vignan-permissions-app.firebaseio.com",
+    "project_id": "vignan-permissions-app",
+    "storage_bucket": "vignan-permissions-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:79050885102:android:f76ca4612f2842f9b0b0ff",
+        "android_client_info": {
+          "package_name": "com.example.vignanpermissions"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "79050885102-a9f5rds64vu9fql9sjb18jo2r3n7gdh9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB4SzTaRw_tG6Qevi94766BurxguG02HLc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "79050885102-a9f5rds64vu9fql9sjb18jo2r3n7gdh9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

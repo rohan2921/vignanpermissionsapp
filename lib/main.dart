@@ -13,23 +13,19 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
         title: 'Flutter Demo',
         theme: ThemeData(
-          primarySwatch: Colors.blue,
-          fontFamily: 'Raleway',
-          textTheme: ThemeData.light().textTheme.copyWith(
-              body1: TextStyle(
-                color: Color.fromRGBO(20, 51, 51, 1),
-              ),
-              body2: TextStyle(
-                color: Color.fromRGBO(20, 51, 51, 1),
-              ),
-              title: TextStyle(
-                fontSize: 20,
-                fontFamily: 'RobotoCondensed',
-               // fontWeight: FontWeight.bold,
-              )),
-        ),
+            primaryColor: Color.fromARGB(0xFF, 0x49, 0x48, 0x9D),
+            accentColor: Color.fromARGB(0xFF,0x6C,0x68,0xF5),//#84A5C60 xFF, 0xA7, 0xCE, 0xCB 6C68F5
+            accentColorBrightness: Brightness.dark,
+            backgroundColor: Colors.white,
+            primarySwatch: Colors.blue,
+            buttonTheme: ButtonTheme.of(context).copyWith(
+                buttonColor: Colors.blue,
+                textTheme: ButtonTextTheme.primary,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20)))),
         home: EventScreen() //start your widgets from here
         );
   }

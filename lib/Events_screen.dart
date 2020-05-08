@@ -6,9 +6,11 @@ class EventScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Theme.of(context).primaryColor,
         title: Text(
-          'Vignan',
-          style: TextStyle(fontFamily: 'Raleway',
+          'VIGNAN',
+          style: TextStyle(
+          fontSize: 30,
           fontWeight: FontWeight.bold
           ),
         ),

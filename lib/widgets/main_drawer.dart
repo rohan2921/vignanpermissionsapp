@@ -26,6 +26,7 @@ class MainDrawer extends StatelessWidget {
                     child: ListTile(
              leading: Icon(Icons.add),
              title: Text('Add Event'),
+             onTap: (){},
            ),
          ),
          Card(
@@ -33,6 +34,7 @@ class MainDrawer extends StatelessWidget {
                     child: ListTile(
              leading: Icon(Icons.exit_to_app),
              title: Text('Logout'),
+             onTap: (){},
            ),
          )
       ],

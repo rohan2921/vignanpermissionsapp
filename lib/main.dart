@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'Events_screen.dart';
+import './screens/Events_screen.dart';
 
 void main() => runApp(MyApp());
 

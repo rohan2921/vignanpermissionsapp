@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../widgets/main_drawer.dart';
 
 class EventScreen extends StatelessWidget {
+
   static const routeName='/event-screen';
   @override
   Widget build(BuildContext context) {

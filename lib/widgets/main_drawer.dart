@@ -27,6 +27,7 @@ class MainDrawer extends StatelessWidget {
            elevation: 5,
                     child: ListTile(
              leading: Icon(Icons.add),
+             title: Text('Add Event'),
              title: Text('Add Report'),
            ),
          ),Card(
@@ -35,14 +36,20 @@ class MainDrawer extends StatelessWidget {
             // leading: ,
              title: Text('Discussions'),
              onTap: null,
+
            ),
          ),
          Card(
            elevation: 5,
                     child: ListTile(
+
+             leading: Icon(Icons.exit_to_app),
+             title: Text('Logout'),
+
              leading: Icon(Icons.chat),
              title: Text('Discussions'),
              onTap: null,
+
            ),
          )
       ],

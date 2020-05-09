@@ -1,6 +1,8 @@
 
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:vignanpermissions/screens/Events_screen.dart';
 
 class MainDrawer extends StatelessWidget {
   @override
@@ -17,7 +19,7 @@ class MainDrawer extends StatelessWidget {
               width: 50,
             ),
             title: Text('Home'),
-            onTap: (){},
+            onTap: ()=> Navigator.of(context).popAndPushNamed(EventScreen.routeName),
           ),
         ),
         
@@ -26,13 +28,28 @@ class MainDrawer extends StatelessWidget {
                     child: ListTile(
              leading: Icon(Icons.add),
              title: Text('Add Event'),
+             title: Text('Add Report'),
+           ),
+         ),Card(
+           elevation: 5,
+                    child: ListTile(
+            // leading: ,
+             title: Text('Discussions'),
+             onTap: null,
+
            ),
          ),
          Card(
            elevation: 5,
                     child: ListTile(
+
              leading: Icon(Icons.exit_to_app),
              title: Text('Logout'),
+
+             leading: Icon(Icons.chat),
+             title: Text('Discussions'),
+             onTap: null,
+
            ),
          )
       ],

@@ -1,10 +1,18 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+
+import '../widgets/report_item.dart';
 import '../widgets/main_drawer.dart';
 
-class EventScreen extends StatelessWidget {
+class EventScreen extends StatefulWidget {
+  static const routeName = '/event-screen';
 
-  static const routeName='/event-screen';
+  @override
+  _EventScreenState createState() => _EventScreenState();
+}
+
+class _EventScreenState extends State<EventScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -12,13 +20,10 @@ class EventScreen extends StatelessWidget {
         backgroundColor: Theme.of(context).primaryColor,
         title: Text(
           'VIGNAN',
-          style: TextStyle(
-          fontSize: 30,
-          fontWeight: FontWeight.bold
-          ),
+          style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
         ),
         actions: <Widget>[
-           DropdownButton(
+          DropdownButton(
               underline: Container(),
               icon: Icon(
                 Icons.more_vert,
@@ -45,6 +50,33 @@ class EventScreen extends StatelessWidget {
         ],
       ),
       drawer: MainDrawer(),
+      body:  Container(
+                child: Column(
+          children: <Widget>[
+            Expanded(
+                child: StreamBuilder(
+                    stream: Firestore.instance.collection('reports').snapshots(),
+                    builder: (ctx, snapshots) {
+                      
+                      if (snapshots.connectionState==ConnectionState.waiting) {
+                        return Center(child: CircularProgressIndicator());
+                      } else {
+                        final report = snapshots.data.documents;
+                        return ListView.builder(
+                          
+                          itemBuilder: (ctx, ind) {
+                            return ReportItem(
+                                report[ind]['title'], report[ind]['imageUrl']);
+                          },
+                          itemCount: report.length,
+                        );
+                      }
+                    }),
+            ),
+          ],
+        ),
+              ),
+      
     );
   }
 }

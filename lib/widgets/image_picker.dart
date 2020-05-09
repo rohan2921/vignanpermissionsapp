@@ -23,17 +23,17 @@ class _UserImagePickerState extends State<UserImagePicker> {
               children: <Widget>[
                 FlatButton.icon(onPressed: () async{
                     pickedImage= await ImagePicker.pickImage(source: ImageSource.camera,imageQuality: 50);
-                     setState(() {
+                     
           _pickedImageShow=pickedImage;
-        });
+        
         widget.fn(_pickedImageShow);
                     Navigator.of(context).pop(bctx);
                 }, icon: Icon(Icons.camera), label: Text('Camera')),
                 FlatButton.icon(onPressed: () async{
                   pickedImage= await ImagePicker.pickImage(source: ImageSource.gallery,imageQuality: 50,maxWidth: 150);
-                   setState(() {
+                   
           _pickedImageShow=pickedImage;
-        });
+        
          widget.fn(_pickedImageShow);
                   Navigator.of(context).pop(bctx);
                 }, icon: Icon(Icons.photo_album), label:Text('Gallery'))
@@ -42,20 +42,10 @@ class _UserImagePickerState extends State<UserImagePicker> {
             behavior: HitTestBehavior.opaque,
           );
         });
-        print(_pickedImageShow);
-       
-        print(_pickedImageShow);
+        
   }
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-         CircleAvatar(radius: 35,
-         
-         backgroundImage: _pickedImageShow==null? NetworkImage('https://1.bp.blogspot.com/-vNBAAu1z7_4/W2sfF_8XHjI/AAAAAAAACGY/EMU-8TLYbegf-Ywv8kMmv85YoHPaAZjNACLcBGAs/s1600/device-2018-08-08-094825.png'): FileImage(_pickedImageShow),
-         ),
-                FlatButton.icon(onPressed: ()=>_pickImage(context), icon: Icon(Icons.add_a_photo),label: Text('Add Image'),),
-      ],
-    );
+    return FlatButton.icon(onPressed: ()=>_pickImage(context), icon: Icon(Icons.add_a_photo),label: Text('Add Image'),);
   }
 }

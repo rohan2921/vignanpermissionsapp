@@ -17,15 +17,23 @@ class ReportItem extends StatelessWidget {
                 child: Image.network(
                   imageUrl,
                   fit: BoxFit.cover,
-                ),
-             
-                  
-                
+                ),   
             ),
           ),
-           Text(
-                title,
-                textAlign: TextAlign.center,)
+          Positioned(
+                  bottom: 10,
+                  right: 5,
+                  child: Container(
+                    padding: EdgeInsets.symmetric(vertical: 5, horizontal: 20),
+                    width: 300,
+                    color: Colors.black54,
+                    child: Text(
+                      title,
+                      style: TextStyle(fontSize: 26, color: Colors.white),
+                      softWrap: true,
+                      overflow: TextOverflow.fade,
+                    ),)),
+           
           
           ]);
   }

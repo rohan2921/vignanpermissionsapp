@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 class UserImagePicker extends StatefulWidget {
   final Function fn;
+
   UserImagePicker(this.fn);
   @override
   _UserImagePickerState createState() => _UserImagePickerState();
@@ -22,7 +23,8 @@ class _UserImagePickerState extends State<UserImagePicker> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
                 FlatButton.icon(onPressed: () async{
-                    pickedImage= await ImagePicker.pickImage(source: ImageSource.camera,imageQuality: 50);
+                  
+                    pickedImage= await ImagePicker.pickImage(source: ImageSource.camera,);
                      
           _pickedImageShow=pickedImage;
         
@@ -30,7 +32,7 @@ class _UserImagePickerState extends State<UserImagePicker> {
                     Navigator.of(context).pop(bctx);
                 }, icon: Icon(Icons.camera), label: Text('Camera')),
                 FlatButton.icon(onPressed: () async{
-                  pickedImage= await ImagePicker.pickImage(source: ImageSource.gallery,imageQuality: 50,maxWidth: 150);
+                  pickedImage= await ImagePicker.pickImage(source: ImageSource.gallery,);
                    
           _pickedImageShow=pickedImage;
         

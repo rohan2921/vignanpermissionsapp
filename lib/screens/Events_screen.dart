@@ -50,21 +50,22 @@ class _EventScreenState extends State<EventScreen> {
         ],
       ),
       drawer: MainDrawer(),
-<<<<<<< HEAD
-      body:  Container(
-                child: Column(
-          children: <Widget>[
-            Expanded(
+      body: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Container(
+          child: Column(
+            children: <Widget>[
+              Expanded(
                 child: StreamBuilder(
-                    stream: Firestore.instance.collection('reports').snapshots(),
+                    stream:
+                        Firestore.instance.collection('reports').snapshots(),
                     builder: (ctx, snapshots) {
-                      
-                      if (snapshots.connectionState==ConnectionState.waiting) {
+                      if (snapshots.connectionState == ConnectionState.waiting) {
                         return Center(child: CircularProgressIndicator());
                       } else {
                         final report = snapshots.data.documents;
                         return ListView.builder(
-                          padding: EdgeInsets.all(20),
+                         // padding: EdgeInsets.all(10),
                           itemBuilder: (ctx, ind) {
                             return ReportItem(
                                 report[ind]['title'], report[ind]['imageUrl']);
@@ -73,41 +74,11 @@ class _EventScreenState extends State<EventScreen> {
                         );
                       }
                     }),
-            ),
-          ],
-        ),
-=======
-      body:  Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Container(
-                  child: Column(
-            children: <Widget>[
-              Expanded(
-                  child: StreamBuilder(
-                      stream: Firestore.instance.collection('reports').snapshots(),
-                      builder: (ctx, snapshots) {
-                        
-                        if (snapshots.connectionState==ConnectionState.waiting) {
-                          return Center(child: CircularProgressIndicator());
-                        } else {
-                          final report = snapshots.data.documents;
-                          return ListView.builder(
-                            
-                            itemBuilder: (ctx, ind) {
-                              return ReportItem(
-                                  report[ind]['title'], report[ind]['imageUrl']);
-                            },
-                            itemCount: report.length,
-                          );
-                        }
-                      }),
->>>>>>> f4ecee352385ee343d38fbdde0e1e32f44d4a94d
               ),
             ],
           ),
-                ),
+        ),
       ),
-      
     );
   }
 }

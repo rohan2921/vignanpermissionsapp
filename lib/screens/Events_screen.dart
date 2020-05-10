@@ -50,32 +50,35 @@ class _EventScreenState extends State<EventScreen> {
         ],
       ),
       drawer: MainDrawer(),
-      body:  Container(
-                child: Column(
-          children: <Widget>[
-            Expanded(
-                child: StreamBuilder(
-                    stream: Firestore.instance.collection('reports').snapshots(),
-                    builder: (ctx, snapshots) {
-                      
-                      if (snapshots.connectionState==ConnectionState.waiting) {
-                        return Center(child: CircularProgressIndicator());
-                      } else {
-                        final report = snapshots.data.documents;
-                        return ListView.builder(
-                          
-                          itemBuilder: (ctx, ind) {
-                            return ReportItem(
-                                report[ind]['title'], report[ind]['imageUrl']);
-                          },
-                          itemCount: report.length,
-                        );
-                      }
-                    }),
-            ),
-          ],
-        ),
+      body:  Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Container(
+                  child: Column(
+            children: <Widget>[
+              Expanded(
+                  child: StreamBuilder(
+                      stream: Firestore.instance.collection('reports').snapshots(),
+                      builder: (ctx, snapshots) {
+                        
+                        if (snapshots.connectionState==ConnectionState.waiting) {
+                          return Center(child: CircularProgressIndicator());
+                        } else {
+                          final report = snapshots.data.documents;
+                          return ListView.builder(
+                            
+                            itemBuilder: (ctx, ind) {
+                              return ReportItem(
+                                  report[ind]['title'], report[ind]['imageUrl']);
+                            },
+                            itemCount: report.length,
+                          );
+                        }
+                      }),
               ),
+            ],
+          ),
+                ),
+      ),
       
     );
   }

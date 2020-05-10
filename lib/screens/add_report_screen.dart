@@ -24,9 +24,7 @@ class _AddReportScreenState extends State<AddReportScreen> {
   DateTime _selectedDate;
   String _guests;
   String _speakers;
-
-  
-
+  var submitted=false;
   void _setImage(File img) {
     setState(() {
       _image = img;
@@ -43,44 +41,55 @@ class _AddReportScreenState extends State<AddReportScreen> {
       if (d == null) {
         return;
       }
-      
+
       setState(() {
         _selectedDate = d;
       });
     });
   }
 
-  void _onSubmit() async{
-     var valid = _formKey.currentState.validate();
+  Future<void> _onSubmit() async {
+    var valid = _formKey.currentState.validate();
     FocusScope.of(context).unfocus();
-    if (_image==null ) {
+    if (_image == null) {
       Scaffold.of(context).showSnackBar(SnackBar(
         content: Text('No Image added'),
       ));
       return;
     }
-    if(valid){
-        _formKey.currentState.save();
-        try{
-        final user= await _auth.currentUser();
-        final ref=  FirebaseStorage.instance.ref().child('report_images').child(user.uid+DateTime.now().toString() + '.jpg');
-          await ref.putFile(_image).onComplete;
-        final url=  await ref.getDownloadURL();
+    if (valid) {
+      setState(() {
+        submitted=true;
+      });
+      
+      _formKey.currentState.save();
+      try {
+        final user = await _auth.currentUser();
+        final ref = FirebaseStorage.instance
+            .ref()
+            .child('report_images')
+            .child(user.uid + DateTime.now().toString() + '.jpg');
+        await ref.putFile(_image).onComplete;
+        final url = await ref.getDownloadURL();
         await Firestore.instance.collection('reports').document().setData({
-          'title':_title,
+          'title': _title,
           'imageUrl': url,
-          'speakers':_speakers,
+          'speakers': _speakers,
           'description': _description,
-          'date':_selectedDate,
-          'guests':_guests,
-          'userId':user.uid,
-        });}catch(err){
-          Scaffold.of(context).showSnackBar(SnackBar(
-        content: Text(err),
-        
-      ));
-        }
-        Navigator.of(context).popAndPushNamed(EventScreen.routeName);
+          'date': _selectedDate,
+          'guests': _guests,
+          'userId': user.uid,
+        });
+      } catch (err) {
+        setState(() {
+        submitted=true;
+      });
+      
+        Scaffold.of(context).showSnackBar(SnackBar(
+          content: Text(err),
+        ));
+      }
+      Navigator.of(context).popAndPushNamed(EventScreen.routeName);
     }
   }
 
@@ -99,88 +108,81 @@ class _AddReportScreenState extends State<AddReportScreen> {
                 borderRadius: BorderRadius.circular(20),
                 child: Container(
                   height: 200,
-                  
                   child: _image == null
                       ? Image.network(
                           'https://djnw5a0wszky0.cloudfront.net/inkfactorywp/wp-content/uploads/2019/06/HomepageIntroAnimation2019.gif')
-                      : 
-                         Image.file(_image ,fit: BoxFit.cover, width: double.infinity),
+                      : Image.file(_image,
+                          fit: BoxFit.cover, width: double.infinity),
                 ),
               ),
               UserImagePicker(_setImage),
               TextFormField(
                 decoration: InputDecoration(labelText: 'Title'),
                 autocorrect: false,
-                  enableSuggestions: false,
-                  textCapitalization: TextCapitalization.none,
-                  onSaved: (val) {
-                    _title = val;
-                  },
-                  validator: (value) {
-                    if (value.isEmpty)
-                      return 'Please enter a valid title';
-                    return null;
-                  },
-                  keyboardType: TextInputType.text,
-                ),
+                enableSuggestions: false,
+                textCapitalization: TextCapitalization.none,
+                onSaved: (val) {
+                  _title = val;
+                },
+                validator: (value) {
+                  if (value.isEmpty) return 'Please enter a valid title';
+                  return null;
+                },
+                keyboardType: TextInputType.text,
+              ),
               TextFormField(
-                  decoration: InputDecoration(labelText: 'Guests'),
-                  autocorrect: false,
-                  enableSuggestions: false,
-                  textCapitalization: TextCapitalization.none,
-                  
-                  onSaved: (val) {
-                    _guests = val;
-                  },
-                  validator: (value) {
-                    if (value.isEmpty )
-                      return 'Please enter guest-name or None';
-                    return null;
-                  },
-                  ),
+                decoration: InputDecoration(labelText: 'Guests'),
+                autocorrect: false,
+                enableSuggestions: false,
+                textCapitalization: TextCapitalization.none,
+                onSaved: (val) {
+                  _guests = val;
+                },
+                validator: (value) {
+                  if (value.isEmpty) return 'Please enter guest-name or None';
+                  return null;
+                },
+              ),
               TextFormField(
-                  decoration: InputDecoration(labelText: 'Speakers'),
-                  autocorrect: false,
-                  enableSuggestions: false,
-                  textCapitalization: TextCapitalization.none,
-                  
-                  onSaved: (val) {
-                    _speakers = val;
-                  },
-                  validator: (value) {
-                    if (value.isEmpty )
-                      return 'Please enter speake/s name/s';
-                    return null;
-                  },
-                  
-                  ),
+                decoration: InputDecoration(labelText: 'Speakers'),
+                autocorrect: false,
+                enableSuggestions: false,
+                textCapitalization: TextCapitalization.none,
+                onSaved: (val) {
+                  _speakers = val;
+                },
+                validator: (value) {
+                  if (value.isEmpty) return 'Please enter speake/s name/s';
+                  return null;
+                },
+              ),
               TextFormField(
-                  decoration: InputDecoration(labelText: 'Description'),
-                  autocorrect: true,
-                  enableSuggestions: true,
-                  textCapitalization: TextCapitalization.sentences,
-                  
-                  onSaved: (val) {
-                    _description= val;
-                  },
-                  validator: (value) {
-                    if (value.isEmpty || value.length<10 )
-                      return 'Minimum of ten characters required';
-                    return null;
-                  },                 
-                  
-                  ),
-              
+                decoration: InputDecoration(labelText: 'Description'),
+                autocorrect: true,
+                enableSuggestions: true,
+                textCapitalization: TextCapitalization.sentences,
+                onSaved: (val) {
+                  _description = val;
+                },
+                validator: (value) {
+                  if (value.isEmpty || value.length < 10)
+                    return 'Minimum of ten characters required';
+                  return null;
+                },
+              ),
               ListTile(
                 leading: Icon(Icons.date_range),
                 title: Text(
                   'Choose Date',
-                  
                 ),
-                trailing: _selectedDate==null? Text(''):Text(DateFormat.yMd().format(_selectedDate)) ,
+                trailing: _selectedDate == null
+                    ? Text('')
+                    : Text(DateFormat.yMd().format(_selectedDate)),
                 onTap: _presentDatePicker,
               ),
-              FlatButton(onPressed: _onSubmit, child: Text('Submit')),
+              FlatButton(onPressed: submitted? null:
+                  _onSubmit
+              ,child: Text('Submit')),
             ],
           ),
         ),

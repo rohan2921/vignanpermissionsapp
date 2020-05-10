@@ -66,13 +66,14 @@ class _AddReportScreenState extends State<AddReportScreen> {
         final ref=  FirebaseStorage.instance.ref().child('report_images').child(user.uid+DateTime.now().toString() + '.jpg');
           await ref.putFile(_image).onComplete;
         final url=  await ref.getDownloadURL();
-        await Firestore.instance.collection('reports').document(user.uid).setData({
+        await Firestore.instance.collection('reports').document().setData({
           'title':_title,
           'imageUrl': url,
           'speakers':_speakers,
           'description': _description,
           'date':_selectedDate,
-          'guests':_guests
+          'guests':_guests,
+          'userId':user.uid,
         });}catch(err){
           Scaffold.of(context).showSnackBar(SnackBar(
         content: Text(err),

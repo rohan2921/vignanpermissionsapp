@@ -108,7 +108,7 @@ class _AddReportScreenState extends State<AddReportScreen> {
               ),
               UserImagePicker(_setImage),
               TextFormField(
-                decoration: InputDecoration(labelText: 'Title'),
+                decoration: InputDecoration(labelText: 'Title',labelStyle: TextStyle(fontWeight: FontWeight.bold)),
                 autocorrect: false,
                   enableSuggestions: false,
                   textCapitalization: TextCapitalization.none,
@@ -123,7 +123,7 @@ class _AddReportScreenState extends State<AddReportScreen> {
                   keyboardType: TextInputType.text,
                 ),
               TextFormField(
-                  decoration: InputDecoration(labelText: 'Guests'),
+                  decoration: InputDecoration(labelText: 'Guests',labelStyle: TextStyle(fontWeight: FontWeight.bold)),
                   autocorrect: false,
                   enableSuggestions: false,
                   textCapitalization: TextCapitalization.none,
@@ -138,7 +138,7 @@ class _AddReportScreenState extends State<AddReportScreen> {
                   },
                   ),
               TextFormField(
-                  decoration: InputDecoration(labelText: 'Speakers'),
+                  decoration: InputDecoration(labelText: 'Speakers',labelStyle: TextStyle(fontWeight: FontWeight.bold)),
                   autocorrect: false,
                   enableSuggestions: false,
                   textCapitalization: TextCapitalization.none,
@@ -154,7 +154,7 @@ class _AddReportScreenState extends State<AddReportScreen> {
                   
                   ),
               TextFormField(
-                  decoration: InputDecoration(labelText: 'Description'),
+                  decoration: InputDecoration(labelText: 'Description',labelStyle: TextStyle(fontWeight: FontWeight.bold,)),
                   autocorrect: true,
                   enableSuggestions: true,
                   textCapitalization: TextCapitalization.sentences,
@@ -174,6 +174,7 @@ class _AddReportScreenState extends State<AddReportScreen> {
                 leading: Icon(Icons.date_range),
                 title: Text(
                   'Choose Date',
+                  style: TextStyle(fontWeight: FontWeight.bold,),
                   
                 ),
                 trailing: _selectedDate==null? Text(''):Text(DateFormat.yMd().format(_selectedDate)) ,

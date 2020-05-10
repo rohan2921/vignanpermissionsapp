@@ -63,7 +63,7 @@ class _EventScreenState extends State<EventScreen> {
                       } else {
                         final report = snapshots.data.documents;
                         return ListView.builder(
-                          
+                          padding: EdgeInsets.all(20),
                           itemBuilder: (ctx, ind) {
                             return ReportItem(
                                 report[ind]['title'], report[ind]['imageUrl']);

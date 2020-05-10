@@ -76,7 +76,7 @@ class _AddReportScreenState extends State<AddReportScreen> {
           'imageUrl': url,
           'speakers': _speakers,
           'description': _description,
-          'date': _selectedDate,
+          'date': _selectedDate.toIso8601String(),
           'guests': _guests,
           'userId': user.uid,
         });

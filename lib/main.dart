@@ -1,5 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:vignanpermissions/screens/report_details_screen.dart';
+
 import './screens/add_report_screen.dart';
 import './screens/auth_screen.dart';
 
@@ -49,6 +51,7 @@ class _MyAppState extends State<MyApp> {
           routes: {
             EventScreen.routeName:(ctx)=>EventScreen(),
             AddReportScreen.routeName:(ctx)=>AddReportScreen(),
+            ReportDetailScreen.routeName:(ctx)=> ReportDetailScreen()
           },
     );
   }

@@ -68,7 +68,7 @@ class _EventScreenState extends State<EventScreen> {
                             
                             itemBuilder: (ctx, ind) {
                               return ReportItem(
-                                  report[ind]['title'], report[ind]['imageUrl']);
+                                  report[ind]);
                             },
                             itemCount: report.length,
                           );

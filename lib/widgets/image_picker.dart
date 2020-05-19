@@ -48,6 +48,6 @@ class _UserImagePickerState extends State<UserImagePicker> {
   }
   @override
   Widget build(BuildContext context) {
-    return FlatButton.icon(onPressed: ()=>_pickImage(context), icon: Icon(Icons.add_a_photo),label: Text('Add Image'),);
+    return FlatButton.icon(onPressed: ()=>_pickImage(context), icon: Icon(Icons.add_a_photo,color: Colors.white,),label: Text('Add Image',style: TextStyle(color:Colors.white),),);
   }
 }

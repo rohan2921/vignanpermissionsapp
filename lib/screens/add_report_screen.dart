@@ -71,6 +71,7 @@ class _AddReportScreenState extends State<AddReportScreen> {
             .child(user.uid + DateTime.now().toString() + '.jpg');
         await ref.putFile(_image).onComplete;
         final url = await ref.getDownloadURL();
+        
         await Firestore.instance.collection('reports').document().setData({
           'title': _title,
           'imageUrl': url,

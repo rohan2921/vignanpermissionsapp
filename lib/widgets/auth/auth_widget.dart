@@ -45,6 +45,7 @@ class _AuthWidgetState extends State<AuthWidget> {
   Widget build(BuildContext context) {
     return Card(
       elevation: 10,
+      color: Theme.of(context).primaryColor,
       margin: EdgeInsets.all(10),
       child: SingleChildScrollView(
           child: Padding(
@@ -58,15 +59,16 @@ class _AuthWidgetState extends State<AuthWidget> {
                   CircleAvatar(
                     radius: 35,
                     backgroundImage: _userImageFile == null
-                        ? NetworkImage(
-                            'https://1.bp.blogspot.com/-vNBAAu1z7_4/W2sfF_8XHjI/AAAAAAAACGY/EMU-8TLYbegf-Ywv8kMmv85YoHPaAZjNACLcBGAs/s1600/device-2018-08-08-094825.png')
+                        ? AssetImage('assets/add_image.gif')
                         : FileImage(_userImageFile),
                   ),
                 if(!_isLogin)UserImagePicker(setImage),
                 TextFormField(
+                  
                   autocorrect: false,
                   enableSuggestions: false,
                   textCapitalization: TextCapitalization.none,
+                  
                   key: ValueKey('email'),
                   onSaved: (val) {
                     _userEmail = val;
@@ -77,7 +79,8 @@ class _AuthWidgetState extends State<AuthWidget> {
                     return null;
                   },
                   keyboardType: TextInputType.emailAddress,
-                  decoration: InputDecoration(labelText: 'Email address'),
+                  decoration: InputDecoration(labelText: 'Email address',labelStyle: TextStyle(color: Colors.white),),
+                  style: TextStyle(color:Colors.white),
                 ),
                 if (!_isLogin)
                   TextFormField(
@@ -90,10 +93,12 @@ class _AuthWidgetState extends State<AuthWidget> {
                     onSaved: (val) {
                       _username = val;
                     },
-                    decoration: InputDecoration(labelText: 'Username'),
+                    decoration: InputDecoration(labelText: 'Username',labelStyle: TextStyle(color: Colors.white)),
+                    style: TextStyle(color:Colors.white),
                   ),
                 TextFormField(
                   key: ValueKey('password'),
+                  style: TextStyle(color:Colors.white),
                   onSaved: (val) {
                     _userPassword = val;
                   },
@@ -103,23 +108,25 @@ class _AuthWidgetState extends State<AuthWidget> {
                     return null;
                   },
                   obscureText: true,
-                  decoration: InputDecoration(labelText: 'Password'),
+                  decoration: InputDecoration(labelText: 'Password',labelStyle: TextStyle(color: Colors.white)),
                 ),
                 SizedBox(height: 10),
                 if (widget.isLoading) CircularProgressIndicator(),
                 if (!widget.isLoading)
                   RaisedButton(
+                    
                     onPressed: _subbmitted,
                     child: Text(_isLogin ? 'Login' : 'Signup'),
                   ),
                 if (!widget.isLoading)
                   FlatButton(
+                    
                       onPressed: () {
                         setState(() {
                           _isLogin = !_isLogin;
                         });
                       },
-                      child: Text(_isLogin ? 'Create new account' : 'Login'))
+                      child: Text(_isLogin ? 'Create new account' : 'Login',style: TextStyle(color: Colors.white),))
               ],
             )),
       )),

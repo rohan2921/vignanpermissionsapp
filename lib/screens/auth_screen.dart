@@ -69,7 +69,7 @@ class _AuthScreenState extends State<AuthScreen> {
                     height: 120,
                     width: 120,
                     child: Image.network(
-                      'https://upload.wikimedia.org/wikipedia/commons/a/ae/Vignan_logo.png',
+                      'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/Vignan_logo.png/903px-Vignan_logo.png',
                       fit: BoxFit.cover,
                     )),
                 AuthWidget(onsubmit: _submittedForm, isLoading: _isLoading),

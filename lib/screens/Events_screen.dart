@@ -56,24 +56,24 @@ class _EventScreenState extends State<EventScreen> {
           child: Column(
             children: <Widget>[
               Expanded(
-                child: StreamBuilder(
-                    stream:
-                        Firestore.instance.collection('reports').snapshots(),
-                    builder: (ctx, snapshots) {
-                      if (snapshots.connectionState == ConnectionState.waiting) {
-                        return Center(child: CircularProgressIndicator());
-                      } else {
-                        final report = snapshots.data.documents;
-                        return ListView.builder(
-                         // padding: EdgeInsets.all(10),
-                          itemBuilder: (ctx, ind) {
-                            return ReportItem(
-                                report[ind]['title'], report[ind]['imageUrl']);
-                          },
-                          itemCount: report.length,
-                        );
-                      }
-                    }),
+                  child: StreamBuilder(
+                      stream: Firestore.instance.collection('reports').snapshots(),
+                      builder: (ctx, snapshots) {
+                        
+                        if (snapshots.connectionState==ConnectionState.waiting) {
+                          return Center(child: CircularProgressIndicator());
+                        } else {
+                          final report = snapshots.data.documents;
+                          return ListView.builder(
+                            
+                            itemBuilder: (ctx, ind) {
+                              return ReportItem(
+                                  report[ind]);
+                            },
+                            itemCount: report.length,
+                          );
+                        }
+                      }),
               ),
             ],
           ),

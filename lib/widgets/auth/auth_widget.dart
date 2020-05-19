@@ -14,10 +14,33 @@ class AuthWidget extends StatefulWidget {
 class _AuthWidgetState extends State<AuthWidget> {
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   var _isLogin = true;
+  bool _isTeacher=false;
   String _userEmail = '';
   String _userPassword = '';
   String _username = '';
+  String teacherId='rohan';
   var _userImageFile;
+
+  Future<String> createAlertDialog(BuildContext context){
+    TextEditingController enteredKeyController =TextEditingController();
+    return showDialog(context: context, builder: (context){
+      return AlertDialog(backgroundColor: Theme.of(context).primaryColor,
+        title: Text('Enter the Key'),
+        content: TextField(
+          controller: enteredKeyController,
+        ),
+        actions: <Widget>[
+          MaterialButton(
+            elevation:5,
+            child: Text("Submit",style: TextStyle(),),
+            onPressed: (){
+               
+              Navigator.of(context).pop(enteredKeyController.text.toString());
+            })
+        ],
+      );
+    });
+  }
 
   void setImage(File img) {
     setState(() {
@@ -111,10 +134,22 @@ class _AuthWidgetState extends State<AuthWidget> {
                   decoration: InputDecoration(labelText: 'Password',labelStyle: TextStyle(color: Colors.white)),
                 ),
                 SizedBox(height: 10),
+                if(!_isLogin) SwitchListTile(
+                  title:  Text('Is Teacher',style: TextStyle(color: Colors.white),),
+                  value: _isTeacher, 
+                  onChanged: (bool value){
+                    if(value)createAlertDialog(context);
+                    setState(() {
+                      _isTeacher=value;
+                      print(_isTeacher);
+                    });
+                  },
+                  activeColor: Colors.green,
+                  inactiveThumbColor: Colors.red,
+                  ),
                 if (widget.isLoading) CircularProgressIndicator(),
                 if (!widget.isLoading)
                   RaisedButton(
-                    
                     onPressed: _subbmitted,
                     child: Text(_isLogin ? 'Login' : 'Signup'),
                   ),

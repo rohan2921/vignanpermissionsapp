@@ -1,8 +1,9 @@
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import '../image_picker.dart';
-
+import 'package:firebase_storage/firebase_storage.dart';
 class AuthWidget extends StatefulWidget {
   final Function onsubmit;
   final isLoading;
@@ -14,13 +15,15 @@ class AuthWidget extends StatefulWidget {
 class _AuthWidgetState extends State<AuthWidget> {
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   var _isLogin = true;
-  bool _isTeacher=false;
+   
   String _userEmail = '';
   String _userPassword = '';
   String _username = '';
-  String teacherId='rohan';
+   String teacherId='rohan';
+  var _isTeacher=false;
   var _userImageFile;
-
+  var _keyMatched=false;
+  var _key;
   Future<String> createAlertDialog(BuildContext context){
     TextEditingController enteredKeyController =TextEditingController();
     return showDialog(context: context, builder: (context){
@@ -47,7 +50,7 @@ class _AuthWidgetState extends State<AuthWidget> {
       _userImageFile = img;
     }); 
   }
-
+ 
   void _subbmitted() {
     var valid = _formKey.currentState.validate();
     FocusScope.of(context).unfocus();
@@ -57,11 +60,27 @@ class _AuthWidgetState extends State<AuthWidget> {
       ));
       return;
     }
+    if(_isTeacher && _keyMatched==false){
+        Scaffold.of(context).showSnackBar(SnackBar(
+        content: Text('Enter valid confirmation key'),
+      ));
+    }
     if (valid) {
       _formKey.currentState.save();
       widget.onsubmit(_userEmail.trim(), _username.trim(), _userImageFile,
-          _userPassword.trim(), _isLogin, context);
+          _userPassword.trim(), _isLogin,_isTeacher, context);
     }
+  }
+  void _getKey(String givenKey) async{
+    if(_key==null){
+      var _fetched=await Firestore.instance.collection('teachersAuth').document('confirmation').get();
+      _key=_fetched.data['key'];
+    }
+    if(givenKey==_key) {
+        _keyMatched=true;
+        
+    }
+
   }
 
   @override
@@ -134,7 +153,8 @@ class _AuthWidgetState extends State<AuthWidget> {
                   decoration: InputDecoration(labelText: 'Password',labelStyle: TextStyle(color: Colors.white)),
                 ),
                 SizedBox(height: 10),
-                if(!_isLogin) SwitchListTile(
+                //code goes here....
+                 if(!_isLogin) SwitchListTile(
                   title:  Text('Is Teacher',style: TextStyle(color: Colors.white),),
                   value: _isTeacher, 
                   onChanged: (bool value){
@@ -150,6 +170,7 @@ class _AuthWidgetState extends State<AuthWidget> {
                 if (widget.isLoading) CircularProgressIndicator(),
                 if (!widget.isLoading)
                   RaisedButton(
+                    
                     onPressed: _subbmitted,
                     child: Text(_isLogin ? 'Login' : 'Signup'),
                   ),

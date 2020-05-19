@@ -30,7 +30,7 @@ class _MyAppState extends State<MyApp> {
           backgroundColor: Colors.white,
           primarySwatch: Colors.blue,
           buttonTheme: ButtonTheme.of(context).copyWith(
-              buttonColor: Colors.blue,
+              buttonColor: Colors.white,
               textTheme: ButtonTextTheme.primary,
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20)))),

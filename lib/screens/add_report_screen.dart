@@ -118,7 +118,7 @@ class _AddReportScreenState extends State<AddReportScreen> {
               ),
               UserImagePicker(_setImage),
               TextFormField(
-                decoration: InputDecoration(labelText: 'Title'),
+                decoration: InputDecoration(labelText: 'Title',labelStyle: TextStyle(fontWeight: FontWeight.bold)),
                 autocorrect: false,
                 enableSuggestions: false,
                 textCapitalization: TextCapitalization.none,

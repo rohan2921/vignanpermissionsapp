@@ -50,10 +50,10 @@ class _EventScreenState extends State<EventScreen> {
         ],
       ),
       drawer: MainDrawer(),
-      body:  Padding(
+      body: Padding(
         padding: const EdgeInsets.all(20.0),
         child: Container(
-                  child: Column(
+          child: Column(
             children: <Widget>[
               Expanded(
                   child: StreamBuilder(
@@ -77,9 +77,8 @@ class _EventScreenState extends State<EventScreen> {
               ),
             ],
           ),
-                ),
+        ),
       ),
-      
     );
   }
 }

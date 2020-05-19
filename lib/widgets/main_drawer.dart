@@ -13,7 +13,7 @@ class MainDrawer extends StatelessWidget {
           elevation: 5,
           child: ListTile(
             leading: Image.network(
-              'https://upload.wikimedia.org/wikipedia/commons/a/ae/Vignan_logo.png',
+              'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/Vignan_logo.png/903px-Vignan_logo.png',
               height: 50,
               width: 50,
             ),

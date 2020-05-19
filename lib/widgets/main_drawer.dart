@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../screens/discussions_screen.dart';
 import '../screens/Events_screen.dart';
 import '../screens/add_report_screen.dart';
 
@@ -44,7 +45,9 @@ class MainDrawer extends StatelessWidget {
           child: ListTile(
             leading: Icon(Icons.chat_bubble),
             title: Text('Discussions'),
-            onTap: null,
+            onTap: (){
+              Navigator.of(context).popAndPushNamed(DiscussionsScreen.routeName);
+            },
           ),
         ),
       ],

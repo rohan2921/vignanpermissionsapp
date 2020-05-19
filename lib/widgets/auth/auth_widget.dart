@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import '../image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+
 class AuthWidget extends StatefulWidget {
   final Function onsubmit;
   final isLoading;
@@ -15,42 +16,22 @@ class AuthWidget extends StatefulWidget {
 class _AuthWidgetState extends State<AuthWidget> {
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   var _isLogin = true;
-   
+
   String _userEmail = '';
   String _userPassword = '';
   String _username = '';
-   String teacherId='rohan';
-  var _isTeacher=false;
+  String teacherId = 'rohan';
+  var _isTeacher = false;
   var _userImageFile;
-  var _keyMatched=false;
+  var _keyMatched = false;
   var _key;
-  Future<String> createAlertDialog(BuildContext context){
-    TextEditingController enteredKeyController =TextEditingController();
-    return showDialog(context: context, builder: (context){
-      return AlertDialog(backgroundColor: Theme.of(context).primaryColor,
-        title: Text('Enter the Key'),
-        content: TextField(
-          controller: enteredKeyController,
-        ),
-        actions: <Widget>[
-          MaterialButton(
-            elevation:5,
-            child: Text("Submit",style: TextStyle(),),
-            onPressed: (){
-               
-              Navigator.of(context).pop(enteredKeyController.text.toString());
-            })
-        ],
-      );
-    });
-  }
 
   void setImage(File img) {
     setState(() {
       _userImageFile = img;
-    }); 
+    });
   }
- 
+
   void _subbmitted() {
     var valid = _formKey.currentState.validate();
     FocusScope.of(context).unfocus();
@@ -60,27 +41,65 @@ class _AuthWidgetState extends State<AuthWidget> {
       ));
       return;
     }
-    if(_isTeacher && _keyMatched==false){
-        Scaffold.of(context).showSnackBar(SnackBar(
+    if (_isTeacher && _keyMatched == false) {
+      Scaffold.of(context).showSnackBar(SnackBar(
         content: Text('Enter valid confirmation key'),
       ));
+      return;
     }
     if (valid) {
       _formKey.currentState.save();
       widget.onsubmit(_userEmail.trim(), _username.trim(), _userImageFile,
-          _userPassword.trim(), _isLogin,_isTeacher, context);
+          _userPassword.trim(), _isLogin, _isTeacher, context);
     }
   }
-  void _getKey(String givenKey) async{
-    if(_key==null){
-      var _fetched=await Firestore.instance.collection('teachersAuth').document('confirmation').get();
-      _key=_fetched.data['key'];
-    }
-    if(givenKey==_key) {
-        _keyMatched=true;
-        
-    }
 
+  void _getKey(String givenKey) async {
+    if (_key == null) {
+      var _fetched = await Firestore.instance
+          .collection('teachersAuth')
+          .document('confirmation')
+          .get();
+      _key = _fetched.data['key'];
+    }
+    if (givenKey == _key) {
+      _keyMatched = true;
+    } else {
+       Scaffold.of(context).showSnackBar(SnackBar(
+        content: Text('Enter valid confirmation key'),
+      ));
+      setState(() {
+        _isTeacher = false;
+      });
+      
+    }
+  }
+
+  Future<String> createAlertDialog(BuildContext context) {
+    TextEditingController enteredKeyController = TextEditingController();
+    return showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            backgroundColor: Theme.of(context).primaryColor,
+            title: Text('Enter the Key'),
+            content: TextField(
+              controller: enteredKeyController,
+            ),
+            actions: <Widget>[
+              MaterialButton(
+                  elevation: 5,
+                  child: Text(
+                    "Submit",
+                    style: TextStyle(),
+                  ),
+                  onPressed: () {
+                    _getKey(enteredKeyController.text.toString());
+                    Navigator.of(context).pop();
+                  })
+            ],
+          );
+        });
   }
 
   @override
@@ -104,13 +123,11 @@ class _AuthWidgetState extends State<AuthWidget> {
                         ? AssetImage('assets/add_image.gif')
                         : FileImage(_userImageFile),
                   ),
-                if(!_isLogin)UserImagePicker(setImage),
+                if (!_isLogin) UserImagePicker(setImage),
                 TextFormField(
-                  
                   autocorrect: false,
                   enableSuggestions: false,
                   textCapitalization: TextCapitalization.none,
-                  
                   key: ValueKey('email'),
                   onSaved: (val) {
                     _userEmail = val;
@@ -121,8 +138,11 @@ class _AuthWidgetState extends State<AuthWidget> {
                     return null;
                   },
                   keyboardType: TextInputType.emailAddress,
-                  decoration: InputDecoration(labelText: 'Email address',labelStyle: TextStyle(color: Colors.white),),
-                  style: TextStyle(color:Colors.white),
+                  decoration: InputDecoration(
+                    labelText: 'Email address',
+                    labelStyle: TextStyle(color: Colors.white),
+                  ),
+                  style: TextStyle(color: Colors.white),
                 ),
                 if (!_isLogin)
                   TextFormField(
@@ -135,12 +155,14 @@ class _AuthWidgetState extends State<AuthWidget> {
                     onSaved: (val) {
                       _username = val;
                     },
-                    decoration: InputDecoration(labelText: 'Username',labelStyle: TextStyle(color: Colors.white)),
-                    style: TextStyle(color:Colors.white),
+                    decoration: InputDecoration(
+                        labelText: 'Username',
+                        labelStyle: TextStyle(color: Colors.white)),
+                    style: TextStyle(color: Colors.white),
                   ),
                 TextFormField(
                   key: ValueKey('password'),
-                  style: TextStyle(color:Colors.white),
+                  style: TextStyle(color: Colors.white),
                   onSaved: (val) {
                     _userPassword = val;
                   },
@@ -150,39 +172,44 @@ class _AuthWidgetState extends State<AuthWidget> {
                     return null;
                   },
                   obscureText: true,
-                  decoration: InputDecoration(labelText: 'Password',labelStyle: TextStyle(color: Colors.white)),
+                  decoration: InputDecoration(
+                      labelText: 'Password',
+                      labelStyle: TextStyle(color: Colors.white)),
                 ),
                 SizedBox(height: 10),
-                //code goes here....
-                 if(!_isLogin) SwitchListTile(
-                  title:  Text('Is Teacher',style: TextStyle(color: Colors.white),),
-                  value: _isTeacher, 
-                  onChanged: (bool value){
-                    if(value)createAlertDialog(context);
-                    setState(() {
-                      _isTeacher=value;
-                      print(_isTeacher);
-                    });
-                  },
-                  activeColor: Colors.green,
-                  inactiveThumbColor: Colors.red,
+                if (!_isLogin)
+                  SwitchListTile(
+                    title: Text(
+                      'Is Teacher',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    value: _isTeacher,
+                    onChanged: (bool value) async {
+                      if (value) await createAlertDialog(context);
+                      setState(() {
+                        _isTeacher = value;
+                      });
+                    },
+                    activeColor: Colors.green,
+                    inactiveThumbColor: Colors.red,
                   ),
                 if (widget.isLoading) CircularProgressIndicator(),
                 if (!widget.isLoading)
                   RaisedButton(
-                    
                     onPressed: _subbmitted,
                     child: Text(_isLogin ? 'Login' : 'Signup'),
                   ),
                 if (!widget.isLoading)
                   FlatButton(
-                    
                       onPressed: () {
                         setState(() {
                           _isLogin = !_isLogin;
                         });
                       },
-                      child: Text(_isLogin ? 'Create new account' : 'Login',style: TextStyle(color: Colors.white),))
+                      child: Text(
+                        _isLogin ? 'Create new account' : 'Login',
+                        style: TextStyle(color: Colors.white),
+                      ))
               ],
             )),
       )),

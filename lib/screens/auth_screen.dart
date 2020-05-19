@@ -15,9 +15,11 @@ class AuthScreen extends StatefulWidget {
 class _AuthScreenState extends State<AuthScreen> {
   final _auth = FirebaseAuth.instance;
   var _isLoading = false;
-  void _submittedForm(String em, String un,File img, String pwd, bool login,
+  var _collectionFetch='user';
+  void _submittedForm(String em, String un,File img, String pwd, bool login,bool isTeacher,
       BuildContext context) async {
     AuthResult response;
+    if(isTeacher) _collectionFetch='teachers';
     setState(() {
       _isLoading = true;
     });
@@ -32,7 +34,7 @@ class _AuthScreenState extends State<AuthScreen> {
           await ref.putFile(img).onComplete;
         final url=  await ref.getDownloadURL();
         await Firestore.instance
-            .collection('user')
+            .collection(_collectionFetch)
             .document(response.user.uid)
             .setData({'username': un, 'email': em,'imageUrl':url});
       }
@@ -69,7 +71,7 @@ class _AuthScreenState extends State<AuthScreen> {
                     height: 120,
                     width: 120,
                     child: Image.network(
-                      'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/Vignan_logo.png/903px-Vignan_logo.png',
+                      'https://upload.wikimedia.org/wikipedia/commons/a/ae/Vignan_logo.png',
                       fit: BoxFit.cover,
                     )),
                 AuthWidget(onsubmit: _submittedForm, isLoading: _isLoading),

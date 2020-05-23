@@ -17,79 +17,68 @@ class ReportDetailScreen extends StatelessWidget {
       body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.all(20),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               ClipRRect(
-                borderRadius: BorderRadius.circular(20),
+                  borderRadius: BorderRadius.circular(20),
                   child: Container(
                       width: double.infinity,
                       height: 300,
-                      child: Image.network(report['imageUrl'],fit: BoxFit.contain,))),
-
-                    SizedBox(height:20),
-                  Card(
-                  
-                  elevation: 10,
-                  child: Container(
-                    width: 300,
-                    child: Text(
+                      child: Image.network(
+                        report['imageUrl'],
+                        fit: BoxFit.contain,
+                      ))),
+              SizedBox(height: 20),
+              Card(
+                              child: Container(
+                  width: 300,
+                  child: FittedBox(
+                                    child: Text(
                       'Date : ' + report['date'],
                       textAlign: TextAlign.center,
-                      style: TextStyle(
-                        
-                        fontSize: 22
-                      ),
+                      
+                      style: TextStyle(fontSize: 22),
                     ),
-                  )),
-
-                      SizedBox(height:20),
-              Card(
-                  
-                  elevation: 10,
-                  child: Container(
-                    width: 300,
-                    child: Text(
-                      'Guest/s : ' + report['guests'],
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        
-                        fontSize: 22
-                      ),
-                    ),
-                  )),
-                  SizedBox(height:20),
-                  Card(
-                  
-                  elevation: 10,
-                  child: Container(
-                    width: 300,
-                    child: Text(
-                      'Speaker/s : ' + report['speakers'],
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        
-                        fontSize: 22
-                      ),
-                    ),
-                  )),
-                  SizedBox(height:20),
-                  Card(
-                  
-                  elevation: 10,
-                  child: Container(
-                    width :300,
-                    
-                    child: Text(
-                      'Description : ' + report['description'],
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        
-                        fontSize: 22
-                      ),
-                    ),
-                  )),
-
+                  ),
+                ),
+              ),
+              SizedBox(height: 20),
+              Container(
+                width: 300,
+                child: Text(
+                  'Guest/s : ' + report['guests'],
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 22),
+                ),
+              ),
+              SizedBox(height: 20),
+              Container(
+                width: 300,
+                child: Text(
+                  'Speaker/s : ' + report['speakers'],
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 22),
+                ),
+              ),
+              Container(
+                padding: EdgeInsets.all(15),
+                width: 300,
+                child:  RichText(
+                        text: TextSpan(
+                          
+                          style: TextStyle(fontSize:22,color: Colors.black),
+                          children: [
+                            TextSpan(
+                                text: 'Description : ' +
+                                    report['description'])
+                          ],
+                        ),
+                        softWrap: true,
+                        maxLines: 20,
+                        overflow: TextOverflow.visible,
+                ), 
+              ),
             ],
           ),
         ),

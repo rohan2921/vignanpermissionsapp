@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import './widgets/chat/new_permission.dart';
 import './screens/discussions_screen.dart';
 import './screens/report_details_screen.dart';
 
@@ -17,7 +18,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
 
-  
+ 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -53,7 +54,8 @@ class _MyAppState extends State<MyApp> {
             EventScreen.routeName:(ctx)=>EventScreen(),
             AddReportScreen.routeName:(ctx)=>AddReportScreen(),
             ReportDetailScreen.routeName:(ctx)=> ReportDetailScreen(),
-            DiscussionsScreen.routeName:(ctx)=>DiscussionsScreen()
+            DiscussionsScreen.routeName:(ctx)=>DiscussionsScreen(),
+            NewPermission.routeName:(ctx)=>NewPermission()
           },
     );
   }

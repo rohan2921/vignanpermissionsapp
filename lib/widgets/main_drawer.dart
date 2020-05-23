@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:vignanpermissions/widgets/chat/new_permission.dart';
+import '../widgets/chat/new_message.dart';
 import '../screens/discussions_screen.dart';
 import '../screens/Events_screen.dart';
 import '../screens/add_report_screen.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class MainDrawer extends StatelessWidget {
   @override
@@ -37,7 +41,22 @@ class MainDrawer extends StatelessWidget {
           child: ListTile(
             leading: Icon(Icons.note_add),
             title: Text('Ask Permissions'),
-            onTap: null,
+            onTap: ()async{
+              try{
+
+                var user= await FirebaseAuth.instance.currentUser();
+              var data= await Firestore.instance.collection('user').document(user.uid).get();
+              if(data.data['isTeacher']){
+
+              }else{
+                  Navigator.of(context).popAndPushNamed(NewPermission.routeName);
+              }
+
+              }catch(err){
+                Scaffold.of(context).showSnackBar(SnackBar(content: Text('Something went wrong...')));
+              }
+              
+            },
           ),
         ),
         Card(

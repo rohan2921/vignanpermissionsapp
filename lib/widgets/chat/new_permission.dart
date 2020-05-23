@@ -2,59 +2,45 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class NewMessage extends StatefulWidget {
+class NewPermission extends StatefulWidget {
+  static const routeName='/new-message';
+
   @override
-  _NewMessageState createState() => _NewMessageState();
+  _NewPermissionState createState() => _NewPermissionState();
 }
 
-class _NewMessageState extends State<NewMessage> {
-  final _controller = new TextEditingController();
-  var _enteredMessage = '';
+class _NewPermissionState extends State<NewPermission> {
+  GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  void _sendMessage() async{
+  final _controller = new TextEditingController();
+
+  void _askPermission() async {
     FocusScope.of(context).unfocus();
-    final user= await FirebaseAuth.instance.currentUser();
-    final name=await Firestore.instance.collection('user').document(user.uid).get();
-    Firestore.instance.collection('permissions')
-        .add({
-          'text': _enteredMessage,
-         'createdAt': Timestamp.now(),
-         'username':name.data['username'],
-        'userId':user.uid,
-        'imageUrl':name.data['imageUrl']
-         });
+    final user = await FirebaseAuth.instance.currentUser();
+    final name =
+        await Firestore.instance.collection('user').document(user.uid).get();
+    Firestore.instance.collection('permissions').add({
+      'topic':'about google',
+      'host':'sundar pichai',
+      'duration':'2-3',
+      'time':10,
+      'date':'12-13-20',
+      'createdAt': Timestamp.now(),
+      'username': name.data['username'],
+      'userId': user.uid,
+    });
     _controller.clear();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        margin: EdgeInsets.only(top: 10),
-        padding: EdgeInsets.all(10),
-        child: Row(
-          children: <Widget>[
-            Expanded(
-                child: Container(
-              decoration:
-                  BoxDecoration(borderRadius: BorderRadius.circular(10)),
-              child: TextField(
-                autocorrect: true,
-                textCapitalization: TextCapitalization.sentences,
-                enableSuggestions: true,
-                controller: _controller,
-                decoration: InputDecoration(labelText: 'Type a mesage'),
-                onChanged: (val) {
-                  setState(() {
-                    _enteredMessage = val;
-                  });
-                },
-              ),
-            )),
-            IconButton(
-                icon: Icon(Icons.send),
-                color: Theme.of(context).primaryColor,
-                onPressed: _enteredMessage.trim().isEmpty ? null : _sendMessage)
-          ],
-        ));
+    return Scaffold(
+      appBar: AppBar(),
+        body: Padding(
+      padding: const EdgeInsets.all(20),
+      child:RaisedButton(
+        child:Text('Click'),
+        onPressed: _askPermission,
+    )));
   }
 }

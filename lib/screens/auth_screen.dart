@@ -15,11 +15,11 @@ class AuthScreen extends StatefulWidget {
 class _AuthScreenState extends State<AuthScreen> {
   final _auth = FirebaseAuth.instance;
   var _isLoading = false;
-  var _collectionFetch='user';
-  void _submittedForm(String em, String un,File img, String pwd, bool login,bool isTeacher,
-      BuildContext context) async {
+
+  void _submittedForm(String em, String un, File img, String pwd, bool login,
+      bool isTeacher, BuildContext context) async {
     AuthResult response;
-    if(isTeacher) _collectionFetch='teachers';
+
     setState(() {
       _isLoading = true;
     });
@@ -30,13 +30,21 @@ class _AuthScreenState extends State<AuthScreen> {
       } else {
         response = await _auth.createUserWithEmailAndPassword(
             email: em, password: pwd);
-          final ref=  FirebaseStorage.instance.ref().child('user_images').child(response.user.uid + '.jpg');
-          await ref.putFile(img).onComplete;
-        final url=  await ref.getDownloadURL();
+        final ref = FirebaseStorage.instance
+            .ref()
+            .child('user_images')
+            .child(response.user.uid + '.jpg');
+        await ref.putFile(img).onComplete;
+        final url = await ref.getDownloadURL();
         await Firestore.instance
-            .collection(_collectionFetch)
+            .collection('user')
             .document(response.user.uid)
-            .setData({'username': un, 'email': em,'imageUrl':url});
+            .setData({
+          'username': un,
+          'email': em,
+          'imageUrl': url,
+          'isTeacher': isTeacher
+        });
       }
     } on PlatformException catch (err) {
       var message = 'an error occured please check you credentials';
@@ -51,7 +59,7 @@ class _AuthScreenState extends State<AuthScreen> {
     setState(() {
       _isLoading = false;
     });
-   // Navigator.of(context).pop();
+    // Navigator.of(context).pop();
   }
 
   @override

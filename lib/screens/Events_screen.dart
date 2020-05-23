@@ -65,10 +65,11 @@ class _EventScreenState extends State<EventScreen> {
                         } else {
                           final report = snapshots.data.documents;
                           return ListView.builder(
-                            
                             itemBuilder: (ctx, ind) {
-                              return ReportItem(
-                                  report[ind]);
+                              return Container( padding: EdgeInsets.all(10),
+                                child: ReportItem(
+                                    report[ind]),
+                              );
                             },
                             itemCount: report.length,
                           );

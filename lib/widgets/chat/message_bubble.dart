@@ -32,13 +32,13 @@ class MessageBubble extends StatelessWidget {
               children: <Widget>[
                 
                        Text(username,style:
-                      TextStyle(color: isMe? Theme.of(context).accentTextTheme.title.color:Colors.black45),),
+                      TextStyle(color: isMe? Theme.of(context).accentColor:Colors.black45),),
                 
                 SizedBox(height:2),
                 Text(
                   message,
                   style:
-                      TextStyle(color: isMe? Theme.of(context).accentTextTheme.title.color:Colors.black45),
+                      TextStyle(color: isMe? Theme.of(context).accentColor:Colors.black45),
                 ),
               ],
             ),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:vignanpermissions/widgets/chat/new_permission.dart';
-import '../widgets/chat/new_message.dart';
+
 import '../screens/discussions_screen.dart';
 import '../screens/Events_screen.dart';
 import '../screens/add_report_screen.dart';

@@ -171,7 +171,7 @@ class _NewPermissionState extends State<NewPermission> {
                 ],
               ),Padding(padding: EdgeInsets.all(15)),
               FlatButton(onPressed: _askPermission, color: Colors.blue,
-              child: Text('Submit',style: TextStyle(fontWeight: FontWeight.bold),)),
+              child: Text('Ask',style: TextStyle(fontWeight: FontWeight.bold),)),
             ],
           ),
         ),

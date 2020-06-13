@@ -13,6 +13,14 @@ class EventScreen extends StatefulWidget {
 }
 
 class _EventScreenState extends State<EventScreen> {
+
+  var isTeacher=false;
+  void getStatus()async{
+    print("1");
+    var user= await FirebaseAuth.instance.currentUser();
+    var data= await Firestore.instance.collection('user').document(user.uid).get();
+    isTeacher=data.data['isTeacher'];
+  }
  
   @override
   Widget build(BuildContext context) {
@@ -50,7 +58,7 @@ class _EventScreenState extends State<EventScreen> {
               })
         ],
       ),
-      drawer: MainDrawer(),
+      drawer: MainDrawer(isTeacher),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
         child: Container(
@@ -64,6 +72,7 @@ class _EventScreenState extends State<EventScreen> {
                         if (snapshots.connectionState==ConnectionState.waiting) {
                           return Center(child: CircularProgressIndicator());
                         } else {
+                          getStatus();
                           final report = snapshots.data.documents;
                           return ListView.builder(
                             

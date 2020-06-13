@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:vignanpermissions/widgets/chat/grant_premission.dart';
 import './widgets/chat/new_permission.dart';
 import './screens/discussions_screen.dart';
 import './screens/report_details_screen.dart';
@@ -55,7 +56,8 @@ class _MyAppState extends State<MyApp> {
             AddReportScreen.routeName:(ctx)=>AddReportScreen(),
             ReportDetailScreen.routeName:(ctx)=> ReportDetailScreen(),
             DiscussionsScreen.routeName:(ctx)=>DiscussionsScreen(),
-            NewPermission.routeName:(ctx)=>NewPermission()
+            NewPermission.routeName:(ctx)=>NewPermission(),
+            GrantPermission.routeName:(ctx)=>GrantPermission()
           },
     );
   }

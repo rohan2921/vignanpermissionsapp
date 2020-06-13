@@ -4,10 +4,11 @@ import 'package:vignanpermissions/widgets/chat/new_permission.dart';
 import '../screens/discussions_screen.dart';
 import '../screens/Events_screen.dart';
 import '../screens/add_report_screen.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+
 
 class MainDrawer extends StatelessWidget {
+  final  isTeacher;
+  MainDrawer(this.isTeacher);
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -40,15 +41,15 @@ class MainDrawer extends StatelessWidget {
           elevation: 5,
           child: ListTile(
             leading: Icon(Icons.note_add),
-            title: Text('Ask Permissions'),
+            title: Text(isTeacher? 'Give Permission':'Ask Permissions'),
             onTap: ()async{
               try{
 
-                var user= await FirebaseAuth.instance.currentUser();
-              var data= await Firestore.instance.collection('user').document(user.uid).get();
-              if(data.data['isTeacher']){
+                
+              if(isTeacher){
 
               }else{
+                print(isTeacher);
                   Navigator.of(context).popAndPushNamed(NewPermission.routeName);
               }
 

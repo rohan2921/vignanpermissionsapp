@@ -41,6 +41,7 @@ class _NewPermissionState extends State<NewPermission> {
       'createdAt': Timestamp.now(),
       'username': name.data['username'],
       'userId': user.uid,
+      'read':false
     });
     
   }

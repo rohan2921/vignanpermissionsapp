@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:vignanpermissions/widgets/chat/new_permission.dart';
+import '../screens/permission_Screen.dart';
+import '../widgets/chat/new_permission.dart';
 
 import '../screens/discussions_screen.dart';
 import '../screens/Events_screen.dart';
@@ -47,7 +48,7 @@ class MainDrawer extends StatelessWidget {
 
                 
               if(isTeacher){
-
+                    Navigator.of(context).popAndPushNamed(PermissionScreen.routeName);
               }else{
                 print(isTeacher);
                   Navigator.of(context).popAndPushNamed(NewPermission.routeName);

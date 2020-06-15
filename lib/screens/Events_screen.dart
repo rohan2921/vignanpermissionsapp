@@ -15,12 +15,26 @@ class EventScreen extends StatefulWidget {
 class _EventScreenState extends State<EventScreen> {
 
   var isTeacher=false;
-  void getStatus()async{
-    print("1");
-    var user= await FirebaseAuth.instance.currentUser();
-    var data= await Firestore.instance.collection('user').document(user.uid).get();
-    isTeacher=data.data['isTeacher'];
+  var isInit=true;
+  @override
+  void initState() {
+    Future.delayed(Duration.zero).then((value)async{
+          if(isInit){
+           print("1");
+           var user= await FirebaseAuth.instance.currentUser();
+          var data= await Firestore.instance.collection('user').document(user.uid).get();
+          isTeacher=data.data['isTeacher'];
+          print(isTeacher);
+          setState(() {
+            isInit=false;
+          });
+          
+      }
+    });
+      
+    super.initState();
   }
+  
  
   @override
   Widget build(BuildContext context) {
@@ -58,22 +72,24 @@ class _EventScreenState extends State<EventScreen> {
               })
         ],
       ),
-      drawer: MainDrawer(isTeacher),
-      body: Padding(
+      
+      body: isInit? Center(child:CircularProgressIndicator()):Padding(
         padding: const EdgeInsets.all(20.0),
-        child: Container(
+        
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               Expanded(
                   child: StreamBuilder(
                       stream: Firestore.instance.collection('reports').snapshots(),
-                      builder: (ctx, snapshots) {
+                      builder: (ctx, snapshots)  {
                         
                         if (snapshots.connectionState==ConnectionState.waiting) {
                           return Center(child: CircularProgressIndicator());
                         } else {
-                          getStatus();
+                         
                           final report = snapshots.data.documents;
+                          print(isTeacher);
                           return ListView.builder(
                             
                             itemBuilder: (ctx, ind) {
@@ -86,9 +102,10 @@ class _EventScreenState extends State<EventScreen> {
                       }),
               ),
             ],
-          ),
+          
         ),
       ),
+      drawer:  MainDrawer(isTeacher),
     );
   }
 }

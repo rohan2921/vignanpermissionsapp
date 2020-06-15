@@ -12,9 +12,12 @@ class GrantPermission extends StatefulWidget {
 
 class _GrantPermissionState extends State<GrantPermission> {
   
+
+  
   
   Widget build(BuildContext context) {
     final perm = ModalRoute.of(context).settings.arguments as dynamic;
+   
     return Scaffold(
       appBar: AppBar(title: Text('Permissions')),
       body: SingleChildScrollView(

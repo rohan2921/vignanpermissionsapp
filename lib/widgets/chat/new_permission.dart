@@ -27,11 +27,14 @@ class _NewPermissionState extends State<NewPermission> {
      var valid = _formKey.currentState.validate();
      if(!valid) return;
      if(_selectedDate==null) return;
+     _formKey.currentState.save();
     FocusScope.of(context).unfocus();
     final user = await FirebaseAuth.instance.currentUser();
     final name =
         await Firestore.instance.collection('user').document(user.uid).get();
-    Firestore.instance.collection('permissions').add({
+    final d=Firestore.instance.collection('permissions').document();
+    
+    d.setData({
       'topic':_topic,
       'host':_hosts,
       'speakers':_speakers,
@@ -41,9 +44,10 @@ class _NewPermissionState extends State<NewPermission> {
       'createdAt': Timestamp.now(),
       'username': name.data['username'],
       'userId': user.uid,
-      'read':false
+      'read':false,
+      'permissionId':d.documentID
     });
-    
+   Navigator.of(context).pop(); 
   }
    void _presentDatePicker() {
     showDatePicker(
@@ -84,7 +88,8 @@ class _NewPermissionState extends State<NewPermission> {
                   _topic = val;
                 },
                 validator: (value) {
-                  if (value.isEmpty) return 'Please enter Topic';
+                  
+                  if (value.length==0) return 'Please enter Topic';
                   return null;
                 },
                 keyboardType: TextInputType.text,
@@ -98,7 +103,7 @@ class _NewPermissionState extends State<NewPermission> {
                   _hosts = val;
                 },
                 validator: (value) {
-                  if (value.isEmpty) return 'Please enter Host-name';
+                  if (value==null) return 'Please enter Host-name';
                   return null;
                 },
               ),

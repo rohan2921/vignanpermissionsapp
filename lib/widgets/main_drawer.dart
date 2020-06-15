@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:vignanpermissions/screens/upcoming_screen.dart';
 import '../screens/permission_Screen.dart';
 import '../widgets/chat/new_permission.dart';
 
@@ -60,6 +61,17 @@ class MainDrawer extends StatelessWidget {
               
             },
           ),
+        ),
+        Card(
+          elevation: 5,
+          child: ListTile(
+            leading: Icon(Icons.update),
+            title:Text('Upcoming Events'),
+            onTap:(){
+                Navigator.of(context).popAndPushNamed(UpcomingScreen.routeName);
+            }
+          ),
+
         ),
         Card(
           elevation: 5,

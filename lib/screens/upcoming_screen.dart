@@ -1,14 +1,16 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:vignanpermissions/widgets/chat/grant_premission.dart';
 
-class PermissionScreen extends StatefulWidget {
-  static const routeName = '/permission-screen';
+import 'package:vignanpermissions/widgets/upcoming_event.dart';
+
+class UpcomingScreen extends StatefulWidget {
+  static const routeName = '/upcoming-screen';
+
   @override
-  _PermissionScreenState createState() => _PermissionScreenState();
+  _UpcomingScreenState createState() => _UpcomingScreenState();
 }
 
-class _PermissionScreenState extends State<PermissionScreen> {
+class _UpcomingScreenState extends State<UpcomingScreen> {
   @override
   Widget build(BuildContext context) {
     
@@ -24,7 +26,13 @@ class _PermissionScreenState extends State<PermissionScreen> {
                   if (snaps.connectionState == ConnectionState.waiting) {
                     return Center(child: CircularProgressIndicator());
                   }
-                  final perms = snaps.data.documents;
+                  final data = snaps.data.documents;
+                  List<DocumentSnapshot> perms=[];
+                  for(int i=0;i<data.length;i++){
+                        if(data[i]['accepted']){
+                          perms.add(data[i]);
+                        }
+                  }
                   return ListView.builder(
                     itemBuilder: (ctx, ind) {
                       return Card(
@@ -41,13 +49,13 @@ class _PermissionScreenState extends State<PermissionScreen> {
                                 
                           ),
                           onTap: () => Navigator.of(context).pushNamed(
-                              GrantPermission.routeName,
+                              UpcomingEvent.routeName,
                               arguments: perms[ind]),
                         ),
                       );
                     },
                     itemCount: perms.length,
-                  );
+                    );
                 }),
           ),
         ],

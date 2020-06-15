@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:intl/intl.dart';
 
 class NewPermission extends StatefulWidget {
   static const routeName='/new-message';
@@ -28,6 +29,7 @@ class _NewPermissionState extends State<NewPermission> {
      if(!valid) return;
      if(_selectedDate==null) return;
      _formKey.currentState.save();
+     String formattedDate = DateFormat('yyyy-MM-dd').format(_selectedDate);
     FocusScope.of(context).unfocus();
     final user = await FirebaseAuth.instance.currentUser();
     final name =
@@ -40,7 +42,7 @@ class _NewPermissionState extends State<NewPermission> {
       'speakers':_speakers,
       'duration':_selectedDuration,
       'time':_selectedTime,
-      'date':_selectedDate,
+      'date':formattedDate,
       'createdAt': Timestamp.now(),
       'username': name.data['username'],
       'userId': user.uid,

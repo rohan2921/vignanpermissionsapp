@@ -15,7 +15,7 @@ class _UpcomingScreenState extends State<UpcomingScreen> {
   Widget build(BuildContext context) {
     
     return Scaffold(
-      appBar: AppBar(title: Text("Permissions")),
+      appBar: AppBar(title: Text("UPCOMING EVENTS")),
       body: Column(
         children: <Widget>[
           Expanded(
@@ -29,7 +29,7 @@ class _UpcomingScreenState extends State<UpcomingScreen> {
                   final data = snaps.data.documents;
                   List<DocumentSnapshot> perms=[];
                   for(int i=0;i<data.length;i++){
-                        if(data[i]['accepted']){
+                        if(data[i]['accepted']==true){
                           perms.add(data[i]);
                         }
                   }

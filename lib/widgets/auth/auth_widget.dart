@@ -123,7 +123,7 @@ class _AuthWidgetState extends State<AuthWidget> {
                         ? AssetImage('assets/add_image.gif')
                         : FileImage(_userImageFile),
                   ),
-                if (!_isLogin) UserImagePicker(setImage),
+                if (!_isLogin) UserImagePicker(setImage,true),
                 TextFormField(
                   autocorrect: false,
                   enableSuggestions: false,

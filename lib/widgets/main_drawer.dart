@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:vignanpermissions/screens/upcoming_screen.dart';
 import '../screens/permission_Screen.dart';
@@ -8,9 +10,35 @@ import '../screens/Events_screen.dart';
 import '../screens/add_report_screen.dart';
 
 
-class MainDrawer extends StatelessWidget {
-  final  isTeacher;
-  MainDrawer(this.isTeacher);
+class MainDrawer extends StatefulWidget {
+ 
+    final isInit;
+    final Function setInit;
+    var isTeacher;
+    MainDrawer(this.isInit,this.setInit,this.isTeacher);
+  @override
+  _MainDrawerState createState() => _MainDrawerState();
+}
+
+class _MainDrawerState extends State<MainDrawer> {
+    
+   
+     
+     @override
+   
+  void initState() {
+    if(widget.isInit){
+      
+    Future.delayed(Duration.zero).then((value)async{ 
+           var user= await FirebaseAuth.instance.currentUser();
+          var data= await Firestore.instance.collection('user').document(user.uid).get();
+          widget.isTeacher=data.data['isTeacher'];
+            widget.setInit(widget.isTeacher);
+    });
+    }
+    super.initState();
+  
+ }
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -43,15 +71,15 @@ class MainDrawer extends StatelessWidget {
           elevation: 5,
           child: ListTile(
             leading: Icon(Icons.note_add),
-            title: Text(isTeacher? 'Give Permission':'Ask Permissions'),
+            title: Text(widget.isTeacher? 'Give Permission':'Ask Permissions'),
             onTap: ()async{
               try{
 
                 
-              if(isTeacher){
+              if(widget.isTeacher){
                     Navigator.of(context).popAndPushNamed(PermissionScreen.routeName);
               }else{
-                print(isTeacher);
+                
                   Navigator.of(context).popAndPushNamed(NewPermission.routeName);
               }
 

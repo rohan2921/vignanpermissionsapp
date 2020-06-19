@@ -14,27 +14,17 @@ class EventScreen extends StatefulWidget {
 
 class _EventScreenState extends State<EventScreen> {
 
-  var isTeacher=false;
-  var isInit=true;
-  @override
-  void initState() {
-    Future.delayed(Duration.zero).then((value)async{
-          if(isInit){
-           print("1");
-           var user= await FirebaseAuth.instance.currentUser();
-          var data= await Firestore.instance.collection('user').document(user.uid).get();
-          isTeacher=data.data['isTeacher'];
-          print(isTeacher);
-          setState(() {
-            isInit=false;
-          });
-          
-      }
-    });
-      
-    super.initState();
-  }
   
+ var isInit=true;
+  var isTeacher=false;
+  void setInit(bool val){
+    setState(() {
+      isInit=false;
+      isTeacher=val;
+    });
+    
+  }
+ 
  
   @override
   Widget build(BuildContext context) {
@@ -73,7 +63,7 @@ class _EventScreenState extends State<EventScreen> {
         ],
       ),
       
-      body: isInit? Center(child:CircularProgressIndicator()):Padding(
+      body:Padding(
         padding: const EdgeInsets.all(20.0),
         
           child: Column(
@@ -89,7 +79,7 @@ class _EventScreenState extends State<EventScreen> {
                         } else {
                          
                           final report = snapshots.data.documents;
-                          print(isTeacher);
+                         
                           return ListView.builder(
                             
                             itemBuilder: (ctx, ind) {
@@ -105,7 +95,7 @@ class _EventScreenState extends State<EventScreen> {
           
         ),
       ),
-      drawer:  MainDrawer(isTeacher),
+      drawer:  MainDrawer(isInit,setInit,isTeacher),
     );
   }
 }
